@@ -1,0 +1,97 @@
+<ActionBar>
+    <NavigationButton icon="res://cerrar" (tap)="cancelar()"></NavigationButton>
+    <Label text="Detalles del Paciente"></Label>
+</ActionBar>
+<ScrollView>
+
+    <FlexboxLayout class="page-principal">
+        <FlexboxLayout class="m-b-10" height="30">
+            <Label class="label-especial" text="Datos del paciente"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf406;" class="fas fa-user-alt"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField autocorrect="false" [(ngModel)]="paciente.nombres" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf406;" class="fas fa-user-alt"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField [(ngModel)]="paciente.apellidos" autocorrect="false" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf2bb;" class="far fa-address-card"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField [(ngModel)]="paciente.identificacion" autocorrect="false" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout class="m-b-10">
+            <GridLayout rows="80" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf073;" class="far fa-calendar-alt"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout class="flexbox-fecha" row="0" column="1">
+                    <FlexboxLayout class="flexbox-fecha" height="40">
+                        <Label class="label-especial" text="Fecha de Nacimiento"></Label>
+                    </FlexboxLayout>
+                    <FlexboxLayout row="0" column="0" height="40" class="flexbox-align-r">
+                        <Label text='{{ fechaNaci | date:"y/MM/dd" }}' class="label-datos borde-label"></Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <GridLayout rows="90" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf21e;" class="fas fa-heartbeat"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1" class="m-l-10">
+                    <GridLayout rows="45, 45" columns="*,90">
+                        <FlexboxLayout rowspan="2" column="0" class="flexbox-align-l">
+                            <Label class="label-datos" text="¿Está en Tratamiento?"></Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout row="0" rowspan="2" column="1">
+                            <GridLayout rows="45,45" columns="*,*">
+                                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                                    <Label class="label-datos" text="Si" disabled="true"></Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout row="0" column="1" class="flexbox-fecha">
+                                    <Label class="label-datos" text="No" disabled="true"></Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout row="1" column="0" class="flexbox-fecha bordes">
+                                    <image src="res://comprobado" *ngIf="paciente.isTratamiento == 1" width="60%" height="60%"></image>
+                                </FlexboxLayout>
+                                <FlexboxLayout row="1" column="1" class="flexbox-fecha bordes">
+                                    <image src="res://comprobado" *ngIf="paciente.isTratamiento == 0" width="60%" height="60%"></image>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </FlexboxLayout>
+                    </GridLayout>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout class="m-b-15">
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf3d1;" class="far fa-money-bill-alt"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField [(ngModel)]="paciente.valorCuota" keyboardType="number" autocorrect="false" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</ScrollView>

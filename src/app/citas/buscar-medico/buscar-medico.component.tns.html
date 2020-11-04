@@ -1,0 +1,23 @@
+<FlexboxLayout class="flex-principal">
+    <!--<FlexboxLayout class="m-b-10 flex-label">
+            <Label class="label-seleccion" text="Seleccione un Paciente"></Label>
+        </FlexboxLayout>-->
+    <FlexboxLayout class="m-b-20 m-t-20">
+        <SearchBar textFieldHintColor="whitesmoke" row="0" hint="Buscar por tarjeta profesional" (textChange)="onTextChanged($event)"
+            (loaded)="searchBarLoaded($event)" (clear)="onClear($event)" (submit)="onSubmit($event)"></SearchBar>
+    </FlexboxLayout>
+    <ScrollView>
+        <StackLayout class="" height="80%">
+            <ListView [items]="medicos" class="list-group" (itemTap)="onSelectItem($event)" height="90%">
+                <ng-template let-item="item">
+                    <GridLayout rows="30,30" columns="*,*">
+                        <Label row="0" column="0" [text]="item.tarjetaProf" class="label-list"></Label>
+                        <Label row="0" column="1" [text]="item.especialidad" class="label-list"></Label>
+                        <Label row="1" column="0" [text]="item.consultorio" class="label-list"></Label>
+                        <Label row="1" column="1" [text]="item.aniosExperiencia" class="label-list"></Label>
+                    </GridLayout>
+                </ng-template>
+            </ListView>
+        </StackLayout>
+    </ScrollView>
+</FlexboxLayout>

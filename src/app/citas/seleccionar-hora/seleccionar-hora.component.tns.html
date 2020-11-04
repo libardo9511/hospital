@@ -1,0 +1,24 @@
+<FlexboxLayout class="flexbox-page">
+    <FlexboxLayout width="80%" height="70%" class="flexbox-page card">
+        <FlexboxLayout class="flexbox-page m-b-10">
+            <Label text="Seleccionar"></Label>
+            <Label text="Hora de la Cita"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout class="flexbox-page m-b-10">
+            <!--<DatePicker [minDate]="minDate" [maxDate]="maxDate" (dateChange)="onDateChanged($event)" class="date-picker">
+            </DatePicker>-->
+            <TimePicker hour="9" minute="25" maxHour="23" maxMinute="59" minuteInterval="30" class="time-picker" (timeChange)="onTimeChanged($event)">>
+            </TimePicker>
+        </FlexboxLayout>
+        <FlexboxLayout class="flexbox-page ">
+            <GridLayout rows="40" columns="*,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-page">
+                    <Button class="btn-cancelar" text="Cancelar" (tap)="cancelar()"></Button>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1" class="flexbox-page">
+                    <Button class="btn-primary" text="Guardar" (tap)="seleccionarFecha()"></Button>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</FlexboxLayout>

@@ -1,0 +1,67 @@
+<ActionBar>
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    </ActionItem>
+    <Label text="Home"></Label>
+</ActionBar>
+
+<ScrollView>
+
+    <GridLayout rows="22, 28, 28, 16, 28, 28, 16, 28, 28, 16, 28, 28, 16, 28, 28, 16, 40" columns="32,*,32,24,*,32,32" class="body scf-card">
+
+        <FlexboxLayout row="1" col="1" colSpan="5">
+            <Label text="Identificación del Paciente" class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="2" col="1" colSpan="5">
+            <Label [text]="idPaciente" (tap)="seleccionarPaciente()" class="label-seleccion"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="1" col="5" rowSpan="2" class="flex-center-icon">
+            <Label text="&#xf105;" class="fas fa-angle-right" (tap)="seleccionarPaciente()"></Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout row="4" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text="Código Cita: " class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="5" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text='{{cita.id}}' class="label-seleccion"></Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout row="7" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text="Tarjeta Médico: " class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="8" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text='{{cita.medicoId}}' class="label-seleccion"></Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout row="10" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text="Fecha Cita: " class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="11" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text='{{fechaCita}}' class="label-seleccion"></Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout row="13" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text="Firma del Paciente" class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="14" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Label text="firmaAquí" class="label-seleccion"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="13" col="5" rowSpan="2" *ngIf="banderaMostrarDatos" class="flex-center-icon">
+            <Label text="&#xf105;" class="fas fa-angle-right" (tap)="firmaPaciente()"></Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout row="16" col="1" colSpan="5" *ngIf="banderaMostrarDatos" class="flex-center-icon">
+            <Button text="Guardar" class="btn-primary" (tap)="actualizarCita()"></Button>
+        </FlexboxLayout>
+
+    </GridLayout>
+</ScrollView>

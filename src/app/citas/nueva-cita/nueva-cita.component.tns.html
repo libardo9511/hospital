@@ -1,0 +1,49 @@
+<ActionBar>
+    <NavigationButton icon="res://cerrar" (tap)="cancelar()"></NavigationButton>
+    <Label text="Nueva Cita"></Label>
+</ActionBar>
+
+<GridLayout rows="22, 24 ,28, 16, 24,28, 16, 24,28, 16, 24,28,16, 55" columns="32,*,32,24,*,32,32" class="body scf-card">
+
+    <FlexboxLayout row="1" col="1" colSpan="5">
+        <Label text="Identificación de Paciente" class="title-label"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="2" col="1" colSpan="5">
+        <Label [text]="idPaciente" (tap)="seleccionarPaciente()" class="label-seleccion"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="1" col="5" rowSpan="2" class="flex-center-icon">
+        <Label text="&#xf105;" class="fas fa-angle-right" (tap)="seleccionarPaciente()"></Label>
+    </FlexboxLayout>
+
+    <FlexboxLayout row="4" col="1" colSpan="5">
+        <Label text="Tarjeta Profesional Médico" class="title-label"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="5" col="1" colSpan="5">
+        <Label [text]="idMedico" (tap)="seleccionarMedico()" class="label-seleccion"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="4" col="5" rowSpan="2" class="flex-center-icon">
+        <Label text="&#xf105;" class="fas fa-angle-right" (tap)="seleccionarMedico()"></Label>
+    </FlexboxLayout>
+
+    <FlexboxLayout row="7" col="1" colSpan="5">
+        <Label text="Fecha de la Cita" class="title-label"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="8" col="1" colSpan="5">
+        <Label text='{{ fechaCita | date:"y/MM/dd" }}' class="label-seleccion" (tap)="seleccionarFecha()"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="7" col="5" rowSpan="2" class="flex-center-icon">
+        <Label text="&#xf105;" class="fas fa-angle-right" (tap)="seleccionarFecha()"></Label>
+    </FlexboxLayout>
+
+    <FlexboxLayout row="10" col="1" colSpan="5">
+        <Label text="Hora de la Cita" class="title-label"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="11" col="1" colSpan="5">
+        <Label [text]="horaCita" class="label-seleccion" editable="false" (tap)="seleccionarHora()"></Label>
+    </FlexboxLayout>
+    <FlexboxLayout row="10" col="5" rowSpan="2" class="flex-center-icon">
+        <Label text="&#xf105;" class="fas fa-angle-right" (tap)="seleccionarHora()"></Label>
+    </FlexboxLayout>
+
+    <Button row="13" col="1" colSpan="5" text="Guardar" (tap)="guardarCita()" class="btn-primary"></Button>
+</GridLayout>

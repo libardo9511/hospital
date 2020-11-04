@@ -1,0 +1,29 @@
+<!--<StackLayout>
+    <DatePicker [minDate]="minDate" [maxDate]="maxDate" (dateChange)="onDateChanged($event)"
+       verticalAlignment="center" class="date-picker">
+    </DatePicker>
+    <button text="OK" (tap)="enviarFecha($event)"></button>
+</StackLayout>-->
+<FlexboxLayout class="flexbox-page">
+    <FlexboxLayout width="80%" height="70%" class="flexbox-page card">
+
+        <FlexboxLayout class="flexbox-page m-b-10">
+            <Label text="Seleccionar"></Label>
+            <Label text="Fecha de Nacimiento"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout class="flexbox-page m-b-10">
+            <DatePicker [minDate]="minDate" [maxDate]="maxDate" (dateChange)="onDateChanged($event)" class="date-picker">
+            </DatePicker>
+        </FlexboxLayout>
+        <FlexboxLayout class="flexbox-page ">
+            <GridLayout rows="40" columns="*,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-page">
+                    <Button class="btn-cancelar" text="Cancelar" (tap)="cancelar()"></Button>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1" class="flexbox-page">
+                    <Button class="btn-primary" text="Guardar" (tap)="seleccionarFecha()"></Button>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</FlexboxLayout>

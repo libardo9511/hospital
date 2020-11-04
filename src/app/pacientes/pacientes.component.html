@@ -1,0 +1,47 @@
+<ActionBar>
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    </ActionItem>
+    <Label text="Pacientes"></Label>
+</ActionBar>
+
+<GridLayout class="page__content" *ngIf="listaPacientes.length == 0">
+    <Label class="page__content-icon fas" text="&#xf0c0;"></Label>
+    <Label class="page__content-placeholder" text="Aún no hay pacientes registrados"></Label>
+</GridLayout>
+<AbsoluteLayout>
+    <FlexboxLayout class="flex-principal" *ngIf="listaPacientes.length > 0">
+        <ScrollView>
+            <StackLayout class="" height="100%">
+                <ListView [items]="listaPacientes"  height="100%">
+                    <ng-template let-item="item">
+                        <StackLayout>
+                            <GridLayout rows="auto, auto" columns="*,*,40">
+                                <Label row="0" col="0" text="Paciente:" class="title-label" [nsRouterLink]="['/pacientes/detalles', item.identificacion]"></Label>
+                                <Label row="0" col="1" [text]="item.apellidos + ', ' + item.nombres" class="label-items" [nsRouterLink]="['/pacientes/detalles', item.identificacion]"></Label>
+                                <Label row="1" col="0" text="Identificación:" class="title-label" [nsRouterLink]="['/pacientes/detalles', item.identificacion]"></Label>
+                                <Label row="1" col="1" [text]="item.identificacion" class="label-items" [nsRouterLink]="['/pacientes/detalles', item.identificacion]"></Label>
+                                <FlexboxLayout class="flex-acciones" row="0" col="2">
+                                    <Label text="&#xf044;" class="far fa-edit" [nsRouterLink]="['/pacientes/editar', item.identificacion]"></Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout class="flex-acciones" row="1" col="2">
+                                    <Label text="&#xf2ed;" class="far fa-trash-alt" (tap)="eliminarPaciente(item.identificacion)"></Label>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </StackLayout>
+                    </ng-template>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </FlexboxLayout>
+    <button id="btn_fab" text="+" (tap)="nuevoPaciente()"></button>
+</AbsoluteLayout>

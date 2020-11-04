@@ -1,0 +1,81 @@
+<ActionBar>
+    <NavigationButton icon="res://cerrar" (tap)="cancelar()"></NavigationButton>
+    <Label text="Detalles del Médico"></Label>
+</ActionBar>
+<ScrollView>
+    <FlexboxLayout class="page-principal">
+        <FlexboxLayout class="m-b-10" height="30">
+            <Label class="label-especial" text="Datos del médico"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf47f;" class="fas fa-id-card-alt"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField autocorrect="false" [(ngModel)]="medico.tarjetaProf" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf0f1;" class="fas fa-stethoscope"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField [(ngModel)]="medico.especialidad" autocorrect="false" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout>
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf271;" class="far fa-calendar-plus"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField [(ngModel)]="medico.aniosExperiencia" autocorrect="false" keyboardType="number" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout class="m-b-15">
+            <GridLayout rows="60" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf0f8;" class="fas fa-hospital"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1">
+                    <TextField [(ngModel)]="medico.consultorio" autocorrect="false" disabled="true"></TextField>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+        <FlexboxLayout class="m-b-15">
+            <GridLayout rows="90" columns="30,*">
+                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                    <Label text="&#xf0fa;" class="fas fa-medkit"></Label>
+                </FlexboxLayout>
+                <FlexboxLayout row="0" column="1" class="m-l-10">
+                    <GridLayout rows="45, 45" columns="*,90">
+                        <FlexboxLayout rowspan="2" column="0" class="flexbox-align-l">
+                            <Label class="label-datos" text="¿Atiende a domicilio?"></Label>
+                        </FlexboxLayout>
+                        <FlexboxLayout row="0" rowspan="2" column="1">
+                            <GridLayout rows="45,45" columns="*,*">
+                                <FlexboxLayout row="0" column="0" class="flexbox-fecha">
+                                    <Label class="label-datos" text="Si"></Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout row="0" column="1" class="flexbox-fecha">
+                                    <Label class="label-datos" text="No"></Label>
+                                </FlexboxLayout>
+                                <FlexboxLayout row="1" column="0" class="flexbox-fecha bordes">
+                                    <image src="res://comprobado" *ngIf="medico.isDomicilio == 1" width="60%" height="60%"></image>
+                                </FlexboxLayout>
+                                <FlexboxLayout row="1" column="1" class="flexbox-fecha bordes">
+                                    <image src="res://comprobado" *ngIf="medico.isDomicilio == 0" width="60%" height="60%"></image>
+                                </FlexboxLayout>
+                            </GridLayout>
+                        </FlexboxLayout>
+                    </GridLayout>
+                </FlexboxLayout>
+            </GridLayout>
+        </FlexboxLayout>
+    </FlexboxLayout>
+</ScrollView>

@@ -1,0 +1,49 @@
+<ActionBar>
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    </ActionItem>
+
+    <Label text="Historial de Citas"></Label>
+    <ActionItem icon="res://lupa" ios.position="right" (tap)="irABusquedas()" *ngIf="listaCitas.length > 0"></ActionItem>
+
+</ActionBar>
+
+<GridLayout class="page__content" *ngIf="listaCitas.length == 0">
+    <Label class="page__content-icon fas" text="&#xf15c;"></Label>
+    <Label class="page__content-placeholder" text="Aún no hay historial de citas"></Label>
+</GridLayout>
+
+<AbsoluteLayout>
+    <FlexboxLayout class="flex-principal" *ngIf="listaCitas.length > 0">
+        <ScrollView>
+            <StackLayout class="" height="100%">
+                <ListView [items]="listaCitas" height="100%">
+                    <ng-template let-item="item">
+                        <StackLayout>
+                            <GridLayout rows="auto, auto" columns="*, *">
+                                <Label row="0" col="0" text="Cód. Cita:" class="title-label" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
+                                <Label row="0" col="1" [text]="item.id" class="label-items" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
+                                <Label row="1" col="0" text="Paciente:" class="title-label" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
+                                <Label row="1" col="1" [text]="item.pacienteId" class="label-items" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
+
+                                <!--<Label row="1" col="1" text="Si Asistió" *ngIf="item.isAsistio" class="label-items"></Label>
+                                <Label row="1" col="1" text="No Asistió" *ngIf="!item.isAsistio" class="label-items"></Label>
+                                -->
+                            </GridLayout>
+                        </StackLayout>
+                    </ng-template>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+    </FlexboxLayout>
+    <button id="btn_fab_citas" text="Nueva Cita" (tap)="nuevaCita()"></button>
+</AbsoluteLayout>

@@ -5,6 +5,7 @@ import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nat
 import { filter } from "rxjs/operators";
 import * as app from "tns-core-modules/application";
 import { SqliteService } from "./services/sqlite.service";
+import {registerElement} from "nativescript-angular/element-registry";
 
 @Component({
     selector: "ns-app",
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
 
     constructor(private router: Router, private routerExtensions: RouterExtensions, private sqliteService: SqliteService) {
         // Use the component constructor to inject services.
+        registerElement('DrawingPad', () => require('nativescript-drawingpad').DrawingPad);
         this.sqliteService.getdbConnection()
             .then(db => {
                 db.execSQL(`CREATE TABLE IF NOT EXISTS "pacientes" ("pacienteId" TEXT NOT NULL, "nombres" TEXT NOT NULL, "apellidos" TEXT NOT NULL, "fechaNaci" TEXT NOT NULL, "isTratamiento" INTEGER NOT NULL CHECK("isTratamiento" = 0 OR "isTratamiento" = 1), "valorCuota" REAL NOT NULL, PRIMARY KEY("pacienteId"))`).then(() => {

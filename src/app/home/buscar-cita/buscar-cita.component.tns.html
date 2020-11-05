@@ -4,7 +4,7 @@
     </FlexboxLayout>-->
     <FlexboxLayout class="m-b-20 m-t-20">
         <SearchBar textFieldHintColor="whitesmoke" row="0" hint="Buscar por identificación" (textChange)="onTextChanged($event)"
-            (loaded)="searchBarLoaded($event)" (clear)="onClear($event)" (submit)="onSubmit($event)" *ngIf="citas.length > 0"></SearchBar>
+            (loaded)="searchBarLoaded($event)" (clear)="onClear($event)" (submit)="onSubmit($event)"></SearchBar>
     </FlexboxLayout>
     <FlexboxLayout class="flex-no-registros" *ngIf="citas.length == 0" width="90%" height="150">
         <Label text="No se encontraron citas pendientes" class="label-list-2 m-b-20"></Label>

@@ -5,6 +5,7 @@ import { HomeRoutingModule } from "./home-routing.module";
 import { HomeComponent } from "./home.component";
 import { BuscarCitaComponent } from "./buscar-cita/buscar-cita.component";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { FirmaComponent } from "./firma/firma.component";
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
     ],
     declarations: [
         HomeComponent,
-        BuscarCitaComponent
+        BuscarCitaComponent,
+        FirmaComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA

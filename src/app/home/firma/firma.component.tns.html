@@ -1,0 +1,20 @@
+<ActionBar>
+    <NavigationButton icon="res://cerrar" (tap)="cancelar()"></NavigationButton>
+    <Label text="Firma de paciente"></Label>
+</ActionBar>
+
+<FlexboxLayout class="flex-center">
+    <!-- centrar layout -->
+    <FlexboxLayout class="flex-center" width="100%" height="400">
+        <StackLayout class="recuadro-firma" background="red">
+            <DrawingPad id="myDrawingPad" height="50%" width="90%" background="whitesmoke"></DrawingPad>
+        </StackLayout>
+        <FlexboxLayout class="flex-center">
+            <Label class="m-t-5 m-b-10 lbl-firma" text="Firme dentro del recuadro"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout class="flex-center">
+            <Button text="Guardar" class="btn-primary" (tap)="getMyDrawing()" width="50%"></Button>
+        </FlexboxLayout>
+    </FlexboxLayout>
+
+</FlexboxLayout>

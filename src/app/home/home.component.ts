@@ -5,6 +5,7 @@ import { ModalDialogOptions, ModalDialogService } from "nativescript-angular";
 import { BuscarCitaComponent } from "./buscar-cita/buscar-cita.component";
 import { Cita } from "../modelos/cita";
 import { CitasService } from "../services/citas.service";
+import { RouterExtensions } from "nativescript-angular/router";
 
 @Component({
     selector: "Home",
@@ -18,7 +19,7 @@ export class HomeComponent implements OnInit {
     banderaMostrarDatos: boolean = false;
     fechaCita: string = "";
 
-    constructor(private _modalService: ModalDialogService, private _vcRef: ViewContainerRef, private citasService: CitasService) {
+    constructor(private routerExtensions: RouterExtensions, private _modalService: ModalDialogService, private _vcRef: ViewContainerRef, private citasService: CitasService) {
         // Use the component constructor to inject providers.
     }
 
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
 
         this._modalService.showModal(BuscarCitaComponent, options)
             .then((result: any) => {
-                console.log("modal Home" + result.cita);
+                //console.log("modal Home" + result.cita);
                 if (result && result.cita != null) {
                     this.cita = new Cita();
                     this.cita = result.cita;
@@ -62,5 +63,9 @@ export class HomeComponent implements OnInit {
         }, (error) => {
             alert(error);
         });
+    }
+
+    firmaPaciente(){
+        this.routerExtensions.navigate(["/home/firma"]);
     }
 }

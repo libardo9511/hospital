@@ -69,6 +69,7 @@ export class NuevaCitaComponent implements OnInit {
 
     this._modalService.showModal(BuscarPacienteComponent, options)
       .then((result: any) => {
+        console.log("Atras paciente");
         if (result) {
           this.paciente = new Paciente();
           this.paciente = result.paciente;

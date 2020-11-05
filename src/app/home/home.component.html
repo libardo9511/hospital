@@ -49,13 +49,13 @@
             <Label text='{{fechaCita}}' class="label-seleccion"></Label>
         </FlexboxLayout>
 
-        <FlexboxLayout row="13" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+        <FlexboxLayout row="13" col="1" colSpan="5" >
             <Label text="Firma del Paciente" class="title-label"></Label>
         </FlexboxLayout>
-        <FlexboxLayout row="14" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
-            <Label text="firmaAquí" class="label-seleccion"></Label>
+        <FlexboxLayout row="14" col="1" colSpan="5" >
+            <Label text="firmaAquí" class="label-seleccion" (tap)="firmaPaciente()"></Label>
         </FlexboxLayout>
-        <FlexboxLayout row="13" col="5" rowSpan="2" *ngIf="banderaMostrarDatos" class="flex-center-icon">
+        <FlexboxLayout row="13" col="5" rowSpan="2"  class="flex-center-icon">
             <Label text="&#xf105;" class="fas fa-angle-right" (tap)="firmaPaciente()"></Label>
         </FlexboxLayout>
 

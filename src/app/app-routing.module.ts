@@ -8,7 +8,9 @@ const routes: Routes = [
     { path: "pacientes", loadChildren: () => import("~/app/pacientes/pacientes.module").then((m) => m.PacientesModule) },
     { path: "medicos", loadChildren: () => import("~/app/medicos/medicos.module").then((m) => m.MedicosModule) },
     { path: "citas", loadChildren: () => import("~/app/citas/citas.module").then((m) => m.CitasModule) },
-    { path: "settings", loadChildren: () => import("~/app/settings/settings.module").then((m) => m.SettingsModule) }
+    { path: "settings", loadChildren: () => import("~/app/settings/settings.module").then((m) => m.SettingsModule) },
+    { path: "about", loadChildren: () => import("~/app/about/about.module").then((m) => m.AboutModule) }
+    
 ];
 
 @NgModule({

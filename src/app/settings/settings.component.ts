@@ -139,9 +139,9 @@ export class SettingsComponent implements OnInit {
 
     guardarParametros() {
         if (this.isChecked) {
-            this.utilidades.alertaInformacion("Información", "Sincronización Activada", "Ok");
+            this.utilidades.alertaInformacion("Información", "Proximamente ...", "Ok");
         } else {
-            this.utilidades.alertaInformacion("Información", "Sincronización Desactivada", "Ok");
+            this.utilidades.alertaInformacion("Información", "Proximamente ...", "Ok");
         }
     }
 }

@@ -29,8 +29,8 @@ export class MedicosComponent implements OnInit {
     ngOnInit(): void {
         // Init your component properties here.
         this.btnFab = this.page.getViewById('btn_fab') as View;
-        this.btnFab.top = screen.mainScreen.heightDIPs - 210;
-        this.btnFab.left = screen.mainScreen.widthDIPs - 90;
+        this.btnFab.top = screen.mainScreen.heightDIPs - 195;
+        this.btnFab.left = (screen.mainScreen.widthDIPs / 2) - 27;
 
         this.listaMedicos = new Array<Medico>();
         this.medicosService.obtenerMedicos().then((result: any) => {

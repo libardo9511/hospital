@@ -32,12 +32,17 @@ https://docs.nativescript.org/angular/ui/professional-ui-components/ng-SideDrawe
                     <Label col="0" text="&#xf328;" class="nt-icon far"></Label>
                     <Label col="1" text="Citas" class="p-r-10"></Label>
                 </GridLayout>
-    
-                <StackLayout class="hr"></StackLayout>
 
                 <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/settings')" (tap)="onNavItemTap('/settings')">
                     <Label col="0" text="&#xf013;" class="nt-icon fas"></Label>
                     <Label col="1" text="Settings" class="p-r-10"></Label>
+                </GridLayout>
+
+                <StackLayout class="hr"></StackLayout>
+
+                <GridLayout columns="auto, *" class="nt-drawer__list-item" [class.-selected]="isComponentSelected('/about')" (tap)="onNavItemTap('/about')">
+                    <Label col="0" text="&#xf013;" class="nt-icon fas"></Label>
+                    <Label col="1" text="About" class="p-r-10"></Label>
                 </GridLayout>
             </StackLayout>
         </ScrollView>

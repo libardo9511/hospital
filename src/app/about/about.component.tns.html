@@ -1,0 +1,30 @@
+<ActionBar>
+    <!-- 
+    Use the NavigationButton as a side-drawer button in Android
+    because ActionItems are shown on the right side of the ActionBar
+    -->
+    <NavigationButton ios:visibility="collapsed" icon="res://menu" (tap)="onDrawerButtonTap()"></NavigationButton>
+    <!-- 
+    Use the ActionItem for IOS with position set to left. Using the
+    NavigationButton as a side-drawer button in iOS is not possible,
+    because its function is to always navigate back in the application.
+    -->
+    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
+    </ActionItem>
+    <Label text="Información"></Label>
+</ActionBar>
+
+<FlexboxLayout class="flex-about">
+    <Label class="lbl-titulos" text="Aplicación desarrollada por: "></Label>
+    <Label class="" text="Libardo Andrés Mora Pascumal"></Label>
+    <Label class="m-b-30" text="2020"></Label>
+    <Label class="m-t-30 lbl-titulos" text="Algunos iconos fueron diseñados por: "></Label>
+    <Label class="" text="Pixel perfect"></Label>
+    <Label class="" text="https://www.flaticon.es/autores/pixel-perfect"></Label>
+    <Label class="" text="y Smashicons"></Label>
+    <Label class="" text="https://www.flaticon.es/autores/smashicons"></Label>
+    <Label class="lbl-titulos" text="Desde: "></Label>
+    <Label class="" text="Flaticon. www.flaticon.es"></Label>
+    <Label class="m-b-10" text="https://www.flaticon.es/"></Label>
+
+</FlexboxLayout>

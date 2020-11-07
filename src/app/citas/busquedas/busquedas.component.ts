@@ -6,6 +6,7 @@ import { ObservableArray } from "tns-core-modules/data/observable-array";
 import { SearchBar } from "tns-core-modules/ui/search-bar";
 import { isAndroid } from "tns-core-modules/platform";
 import * as dialogs from "tns-core-modules/ui/dialogs";
+import { Page, View } from "tns-core-modules/ui/page";
 
 @Component({
   selector: 'ns-busquedas',
@@ -14,7 +15,7 @@ import * as dialogs from "tns-core-modules/ui/dialogs";
 })
 export class BusquedasComponent implements OnInit {
 
-  constructor(private citasService: CitasService, private routerExtensions: RouterExtensions) { }
+  constructor(private citasService: CitasService, private routerExtensions: RouterExtensions, private page: Page) { }
 
   tipoBusqueda: boolean = false;
   public cita: Cita;
@@ -22,13 +23,12 @@ export class BusquedasComponent implements OnInit {
   private arrayCitas: Array<Cita> = [];
   public citas: ObservableArray<Cita> = new ObservableArray<Cita>();
   busquedaSelec: string = "Por Paciente";
+  barraBusqueda: SearchBar;
 
   ngOnInit(): void {
     this.arrayCitas = new Array<Cita>();
     this.citasService.obtenerCitas().then((result: any) => {
       if (result.status == true) {
-        //this.listaMedicos = result.vehiculo;
-        console.log(result.datos);
         for (let row in result.datos) {
           let cita: Cita = new Cita();
           cita.id = result.datos[row][0];
@@ -55,7 +55,6 @@ export class BusquedasComponent implements OnInit {
   public onSubmit(args) {
     let searchBar = <SearchBar>args.object;
     let searchValue = searchBar.text.toLowerCase();
-    console.log("onSubmit" + searchValue);
     this._searchedText = searchValue;
     this.citas = new ObservableArray<Cita>();
     if (searchValue !== "") {
@@ -63,7 +62,6 @@ export class BusquedasComponent implements OnInit {
 
         for (let i = 0; i < this.arrayCitas.length; i++) {
           let idPaciente: string = this.arrayCitas[i].pacienteId.toString();
-          console.log("Paciente id: " + idPaciente);
           if (idPaciente.toLowerCase().indexOf(searchValue) !== -1) {
             this.citas.push(this.arrayCitas[i]);
           }
@@ -71,7 +69,6 @@ export class BusquedasComponent implements OnInit {
       } else {
         for (let i = 0; i < this.arrayCitas.length; i++) {
           let idMedico: string = this.arrayCitas[i].medicoId.toString();
-          console.log("Medico tarjeta: " + idMedico);
           if (idMedico.toLowerCase().indexOf(searchValue) !== -1) {
             this.citas.push(this.arrayCitas[i]);
           }
@@ -89,16 +86,13 @@ export class BusquedasComponent implements OnInit {
       searchBar.android.clearFocus();
     }
     searchBar.text = "";
-    console.log("searchBarLoaded");
 
   }
 
   public onClear(args) {
-    console.log("onClear");
-
     let searchBar = <SearchBar>args.object;
     searchBar.text = "";
-      searchBar.hint = "Buscar ...";
+    searchBar.hint = "Buscar ...";
 
     this.citas = new ObservableArray<Cita>();
     this.arrayCitas.forEach(item => {
@@ -108,15 +102,12 @@ export class BusquedasComponent implements OnInit {
   }
 
   public onTextChanged(args) {
-    console.log("onChanged");
-
     this.onSubmit(args);
   }
 
-  elegirOpcionDeBusqueda() {
+  elegirOpcionDeBusqueda(args) {
     dialogs.action("Parámetro de busqueda", "Cancelar", ["Por Paciente", "Por Médico"]).then(result => {
       if (result != "Cancelar") {
-        console.log("Resultado dialogo: " + result);
         if (result == "Por Paciente") {
           this.tipoBusqueda = false;
           this.busquedaSelec = "Por Paciente";
@@ -125,10 +116,28 @@ export class BusquedasComponent implements OnInit {
           this.busquedaSelec = "Por Médico";
 
         }
+        this.barraBusqueda = this.page.getViewById("search") as SearchBar;
+        this.barraBusqueda.text = "";
+        this.barraBusqueda.hint = "Buscar ...";
+        this.refrescarEnCambioDeOpcion();
       }
     });
   }
 
+  refrescarEnCambioDeOpcion() {
+    this.citas = new ObservableArray<Cita>();
+    if (!this.tipoBusqueda) {
+      for (let i = 0; i < this.arrayCitas.length; i++) {
+        let idPaciente: string = this.arrayCitas[i].pacienteId.toString();
+        this.citas.push(this.arrayCitas[i]);
+      }
+    } else {
+      for (let i = 0; i < this.arrayCitas.length; i++) {
+        let idMedico: string = this.arrayCitas[i].medicoId.toString();
+        this.citas.push(this.arrayCitas[i]);
+      }
+    }
+  }
 
 
 

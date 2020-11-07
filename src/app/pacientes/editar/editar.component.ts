@@ -6,6 +6,7 @@ import { PacientesService } from "../../services/pacientes.service";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular";
 import { SeleccionarFechaComponent } from "../seleccionar-fecha/seleccionar-fecha.component";
 import { confirm } from "tns-core-modules/ui/dialogs";
+import { Utilidades } from "../../modelos/utils";
 
 @Component({
   selector: 'ns-editar',
@@ -22,6 +23,7 @@ export class EditarComponent implements OnInit {
   estadoSelec: boolean = false;
   idActualizar: string = "";
   confirmacionUpdate: boolean = false;
+  utilidades: Utilidades = new Utilidades();
   //fechaNaci: Date;
 
   ngOnInit(): void {
@@ -46,7 +48,6 @@ export class EditarComponent implements OnInit {
     }, (error) => {
       alert(error);
     });
-    console.log(item);
   }
 
   cancelar() {
@@ -102,19 +103,19 @@ export class EditarComponent implements OnInit {
     confirm(options).then((result: boolean) => {
 
       this.confirmacionUpdate = result;
-      
+
       if (this.confirmacionUpdate) {
         if (this.estadoSelec) {
           this.paciente.isTratamiento = 1;
         } else {
           this.paciente.isTratamiento = 0;
         }
-        let strFecha = "";
+        /*let strFecha = "";
         strFecha += this.fechaNacimiento.getFullYear() + "/";
         strFecha += (this.fechaNacimiento.getMonth() + 1) + "/";
-        strFecha += this.fechaNacimiento.getDate();
+        strFecha += this.fechaNacimiento.getDate();*/
 
-        this.paciente.fechaNaci = strFecha;
+        this.paciente.fechaNaci = this.utilidades.configurarFecha(this.fechaNacimiento);
         this.pacientesService.actualizarPaciente(this.paciente).then((result: any) => {
           if (result.status == true) {
             alert(result.message);

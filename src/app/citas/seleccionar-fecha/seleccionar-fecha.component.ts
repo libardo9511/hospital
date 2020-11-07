@@ -23,14 +23,14 @@ export class SeleccionarFechaComponent implements OnInit {
 
   seleccionarFecha(args) {
     let fechaCita = this.fechaSelec;
-    console.log("FC" + this.fechaSelec);
+    //console.log("FC" + this.fechaSelec);
     this._params.closeCallback({
       fechaCita
     });
   }
 
   cancelar() {
-    let fechaCita = "";
+    let fechaCita: Date = new Date();;
     this._params.closeCallback({
       fechaCita
     });

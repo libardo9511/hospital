@@ -29,15 +29,14 @@
                 <ListView [items]="listaCitas" height="100%">
                     <ng-template let-item="item">
                         <StackLayout>
-                            <GridLayout rows="auto, auto" columns="*, *">
+                            <GridLayout rows="auto, auto, auto" columns="auto, *">
                                 <Label row="0" col="0" text="Cód. Cita:" class="title-label" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
                                 <Label row="0" col="1" [text]="item.id" class="label-items" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
                                 <Label row="1" col="0" text="Paciente:" class="title-label" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
                                 <Label row="1" col="1" [text]="item.pacienteId" class="label-items" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
+                                <Label row="2" col="0" text="Fecha cita: " class="title-label" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
+                                <Label row="2" col="1" [text]="item.fechaCita" class="label-items" [nsRouterLink]="['/citas/detalles', item.id]"></Label>
 
-                                <!--<Label row="1" col="1" text="Si Asistió" *ngIf="item.isAsistio" class="label-items"></Label>
-                                <Label row="1" col="1" text="No Asistió" *ngIf="!item.isAsistio" class="label-items"></Label>
-                                -->
                             </GridLayout>
                         </StackLayout>
                     </ng-template>

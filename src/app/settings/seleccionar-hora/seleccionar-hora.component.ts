@@ -12,10 +12,10 @@ import { Page } from 'tns-core-modules/ui/page/page';
 export class SeleccionarHoraComponent implements OnInit {
 
   horaSelec: string = "";
+
   constructor(private _params: ModalDialogParams, private page: Page) { }
 
   ngOnInit(): void {
-
   }
 
   onTimeChanged(args) {
@@ -26,16 +26,17 @@ export class SeleccionarHoraComponent implements OnInit {
   }
 
   seleccionarFecha(args) {
-    let horaCita = this.horaSelec;
+    let horaSync = this.horaSelec;
     this._params.closeCallback({
-      horaCita
+      horaSync
     });
   }
 
   cancelar() {
-    let horaCita = "Seleccione una hora";
+    let horaSync = "Seleccione una hora";
     this._params.closeCallback({
-      horaCita
+      horaSync
     });
   }
+
 }

@@ -8,7 +8,7 @@
     </FlexboxLayout>
     <FlexboxLayout class="flex-no-registros" *ngIf="citas.length == 0" width="90%" height="150">
         <Label text="No se encontraron citas pendientes" class="label-list-2 m-b-20"></Label>
-        <Button text="Regresar" class="btn-primary" (tap)="cancelar()"></Button>        
+        <Button text="Regresar" class="btn-primary" (tap)="cancelar()"></Button>
     </FlexboxLayout>
     <ScrollView *ngIf="citas.length > 0">
         <StackLayout class="" height="80%" *ngIf="citas.length > 0">
@@ -18,7 +18,7 @@
                         <Label row="0" column="0" text="Paciente Id: " class="label-list"></Label>
                         <Label row="0" column="1" [text]="item.pacienteId" class="label-list"></Label>
                         <Label row="1" column="0" text="Fecha Cita: " class="label-list"></Label>
-                        <Label row="1" column="1" [text]="fechaCita" class="label-list"></Label>
+                        <Label row="1" column="1" [text]="item.fechaCita" class="label-list"></Label>
                     </GridLayout>
                 </ng-template>
             </ListView>

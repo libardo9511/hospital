@@ -4,6 +4,7 @@ import { PacientesService } from "../../services/pacientes.service";
 import { RouterExtensions } from "nativescript-angular/router";
 import { ModalDialogOptions, ModalDialogService } from "nativescript-angular";
 import { SeleccionarFechaComponent } from "../seleccionar-fecha/seleccionar-fecha.component";
+import { Utilidades } from "../../modelos/utils";
 
 @Component({
   selector: 'ns-nuevo-paciente',
@@ -15,6 +16,7 @@ export class NuevoPacienteComponent implements OnInit {
   paciente: Paciente;
   estadoSelec: boolean = false;
   public fechaNacimiento = new Date();
+  utilidades: Utilidades = new Utilidades();
 
   constructor(private pacientesService: PacientesService, private routerExtensions: RouterExtensions, private _modalService: ModalDialogService,
     private _vcRef: ViewContainerRef) { }
@@ -37,11 +39,11 @@ export class NuevoPacienteComponent implements OnInit {
     this.paciente.fechaNaci = strFecha;
     this.pacientesService.guardarPaciente(this.paciente).then((result: any) => {
       if (result.status == true) {
-        alert(result.message);
+        this.utilidades.alertaInformacion("Información", result.message, "Ok");
         this.routerExtensions.navigate(["/pacientes"], { clearHistory: true });
       }
     }, (error) => {
-      alert(error);
+      this.utilidades.alertaInformacion("Información", error.message, "Ok");
     });
   }
 

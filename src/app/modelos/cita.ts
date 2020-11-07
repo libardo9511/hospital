@@ -7,5 +7,5 @@ export class Cita {
     medicoId: Medico;
     fechaCita: string;
     isAsistio: number;
-
+    firma: string;
 }

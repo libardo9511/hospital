@@ -6,6 +6,11 @@ import { BuscarCitaComponent } from "./buscar-cita/buscar-cita.component";
 import { Cita } from "../modelos/cita";
 import { CitasService } from "../services/citas.service";
 import { RouterExtensions } from "nativescript-angular/router";
+import { Page, View } from "tns-core-modules/ui/page";
+import { DrawingPad } from 'nativescript-drawingpad';
+import * as imageSourceModule from "tns-core-modules/image-source";
+import { ScrollView } from "tns-core-modules/ui/scroll-view"
+import { Utilidades } from "../modelos/utils";
 
 @Component({
     selector: "Home",
@@ -18,8 +23,12 @@ export class HomeComponent implements OnInit {
     cita: Cita = new Cita();
     banderaMostrarDatos: boolean = false;
     fechaCita: string = "";
+    signatureImage: imageSourceModule.ImageSource
+    signatureImageString: string;
+    scroll: ScrollView = null;
+    utilidades: Utilidades = new Utilidades();
 
-    constructor(private routerExtensions: RouterExtensions, private _modalService: ModalDialogService, private _vcRef: ViewContainerRef, private citasService: CitasService) {
+    constructor(private page: Page, private routerExtensions: RouterExtensions, private _modalService: ModalDialogService, private _vcRef: ViewContainerRef, private citasService: CitasService) {
         // Use the component constructor to inject providers.
     }
 
@@ -42,10 +51,10 @@ export class HomeComponent implements OnInit {
             .then((result: any) => {
                 //console.log("modal Home" + result.cita);
                 if (result && result.cita != null) {
-                    this.cita = new Cita();
                     this.cita = result.cita;
-                    this.fechaCita = result.fec;
-                    console.log(this.cita.pacienteId.toString());
+                    console.log(this.cita);
+                    //this.fechaCita = result.fec;
+                    //console.log(this.cita.pacienteId.toString());
                     this.idPaciente = this.cita.pacienteId.toString();
                     this.banderaMostrarDatos = true;
                 }
@@ -53,19 +62,48 @@ export class HomeComponent implements OnInit {
     }
 
     actualizarCita() {
+        this.cita.fechaCita = this.utilidades.convertirFechaStringADate(this.cita.fechaCita);
+        
         this.citasService.actualizarCita(this.cita).then((result: any) => {
             if (result.status == true) {
-                alert(result.message);
                 this.idPaciente = "Seleccione un paciente";
                 this.banderaMostrarDatos = false;
-                //this.routerExtensions.navigate(["/citas"], { clearHistory: true });
+                this.scroll = this.page.getViewById("scrollId") as ScrollView;
+                this.scroll.scrollToVerticalOffset(0, true);
+                alert(result.message);
+                //this.routerExtensions.navigate(["/home"], { clearHistory: true });
             }
         }, (error) => {
             alert(error);
         });
     }
 
-    firmaPaciente(){
-        this.routerExtensions.navigate(["/home/firma"]);
+    public getMyDrawing() {
+        const drawingPad = this.page.getViewById('myDrawingPad') as DrawingPad;
+        let drawingImage;
+        drawingPad.getDrawing().then((result) => {
+            if (result) {
+                //console.log(result);
+                drawingImage = result;
+                const source = new imageSourceModule.ImageSource;
+                source.setNativeSource(result);
+                this.signatureImageString = source.toBase64String("png");
+                this.cita.firma = this.signatureImageString;
+                this.actualizarCita();
+            }
+            //this.signatureImage = imageSourceModule.fromBase64(this.signatureImageString);
+
+        }, (err) => {
+            alert("Error Obtener firma: " + err);
+        });
     }
+
+    sentenciaSQL(){
+        this.utilidades.agregarSentencia();
+    }
+
+    /*public clearMyDrawing() {
+        const drawingPad = this.page.getViewById('myDrawingPad') as DrawingPad;
+        drawingPad.clearDrawing();
+    }*/
 }

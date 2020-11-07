@@ -18,7 +18,7 @@ export class CitasService {
               resolve({ status: true, datos: rows });
             }
             else {
-              reject({ status: false, message: "Aún no hay datos" });
+              reject({ status: false, message: "Aún no hay citas registradas" });
             }
           });
         });
@@ -29,7 +29,10 @@ export class CitasService {
     return new Promise<Object>((resolve, reject) => {
       this.sqliteService.getdbConnection()
         .then(db => {
-          db.execSQL("INSERT INTO citas (pacienteId, medicoId, fechaCita, isAsistio) VALUES (?,?,?,?)", [cita.pacienteId.identificacion, cita.medicoId.tarjetaProf, cita.fechaCita, cita.isAsistio]).then(id => {
+          db.execSQL("INSERT INTO citas (pacienteId, medicoId, fechaCita, isAsistio) VALUES (?,?,?,?)", [cita.pacienteId.identificacion, cita.medicoId.tarjetaProf, cita.fechaCita, cita.isAsistio]).then(idGuardado => {
+            db.execSQL("insert into logs (sentencia) values (?)", [`INSERT INTO citas (idCita, pacienteId, medicoId, fechaCita, isAsistio) VALUES (${idGuardado}, '${cita.pacienteId.identificacion}','${cita.medicoId.tarjetaProf}','${cita.fechaCita}',${cita.isAsistio})`], function (err, id) {
+              console.log("The new record id is:", id);
+            });
             resolve({ status: true, message: "Guardado Correctamente" });
           }, err => {
             reject({ status: false, message: "Error al Guardar" });
@@ -39,10 +42,15 @@ export class CitasService {
   }
 
   actualizarCita(cita: Cita) {
+    let jkj = "ssssssssssssss";
+
     return new Promise<Object>((resolve, reject) => {
       this.sqliteService.getdbConnection()
         .then(db => {
-          db.execSQL("UPDATE citas SET pacienteId = ?, medicoId = ?, fechaCita = ?, isAsistio = ? WHERE idCita = ?", [cita.pacienteId, cita.medicoId, cita.fechaCita, 1, cita.id]).then(id => {
+          db.execSQL("UPDATE citas SET pacienteId = ?, medicoId = ?, fechaCita = ?, isAsistio = ?, firma = ? WHERE idCita = ?", [cita.pacienteId, cita.medicoId, cita.fechaCita, 1, cita.firma, cita.id]).then(id => {
+            db.execSQL("insert into logs (sentencia) values (?)", [`UPDATE citas SET pacienteId = '${cita.pacienteId}', medicoId = '${cita.medicoId}', fechaCita = '${cita.fechaCita}', isAsistio = ${cita.isAsistio}, firma = '${cita.firma}' WHERE idCita = ${cita.id}`], function (err, id) {
+              console.log("The new record id is:", id);
+            });
             resolve({ status: true, message: "Registrado Correctamente" });
           }, err => {
             reject({ status: false, message: "Error al Registrar" });
@@ -60,7 +68,7 @@ export class CitasService {
               resolve({ status: true, datos: rows });
             }
             else {
-              reject({ status: false, message: "No exite la cita" });
+              reject({ status: false, message: "No existe la cita" });
             }
           });
         });

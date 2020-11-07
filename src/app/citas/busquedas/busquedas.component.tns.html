@@ -7,16 +7,16 @@
     <FlexboxLayout class="m-t-10  flex-encabezado" background="white" width="90%" height="30">
         <GridLayout rows="*" columns="*,*">
             <Label class="label-seleccion m-l-10 fas" text="Buscar por: " row="0" column="0"></Label>
-            <Label class="label-seleccion m-l-10 fa-angle-right fas" text='{{busquedaSelec}}  &#xf105;' row="0" column="1" (tap)="elegirOpcionDeBusqueda()"></Label>
+            <Label class="label-seleccion m-l-10 fa-angle-right fas" text='{{busquedaSelec}}  &#xf105;' row="0" column="1" (tap)="elegirOpcionDeBusqueda($event)"></Label>
         </GridLayout>
     </FlexboxLayout>
     <FlexboxLayout class="m-b-20 m-t-20">
-        <SearchBar textFieldHintColor="whitesmoke" row="0" hint="Buscar ..." (textChange)="onTextChanged($event)"
+        <SearchBar id="search" textFieldHintColor="whitesmoke" row="0" hint="Buscar ..." (textChange)="onTextChanged($event)"
             (loaded)="searchBarLoaded($event)" (clear)="onClear($event)" (submit)="onSubmit($event)"></SearchBar>
     </FlexboxLayout>
     <ScrollView>
         <StackLayout class="" height="70%">
-            <ListView [items]="citas" class="list-group" (itemTap)="onSelectItem($event)" height="90%">
+            <ListView [items]="citas" class="list-group" height="90%">
                 <ng-template let-item="item">
                     <GridLayout rows="30,30" columns="*,*">
                         <Label row="0" column="0" text="Cód. Cita" class="label-list"></Label>

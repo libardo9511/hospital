@@ -25,7 +25,6 @@ export class BuscarMedicoComponent implements OnInit {
     this.medicosService.obtenerMedicos().then((result: any) => {
       if (result.status == true) {
         //this.listaMedicos = result.vehiculo;
-        console.log(result.datos);
         for (let row in result.datos) {
           let medico: Medico = new Medico();
           medico.tarjetaProf = result.datos[row][0];
@@ -83,7 +82,7 @@ export class BuscarMedicoComponent implements OnInit {
   public onClear(args) {
     let searchBar = <SearchBar>args.object;
     searchBar.text = "";
-    searchBar.hint = "Identificación del paciente";
+    searchBar.hint = "Buscar por tarjeta profesional";
 
     this.medicos = new ObservableArray<Medico>();
     this.arrayMedicos.forEach(item => {

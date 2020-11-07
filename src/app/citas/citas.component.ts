@@ -6,6 +6,7 @@ import { screen } from 'tns-core-modules/platform';
 import { CitasService } from "../services/citas.service";
 import { RouterExtensions } from "nativescript-angular/router";
 import { Cita } from "../modelos/cita";
+import { Utilidades } from "../modelos/utils";
 
 @Component({
     selector: "Citas",
@@ -16,6 +17,7 @@ export class CitasComponent implements OnInit {
 
     btnFab: View = null;
     listaCitas: Array<Cita>;
+    utilidades: Utilidades = new Utilidades();
 
     constructor(private page: Page, private citasService: CitasService, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
@@ -30,21 +32,19 @@ export class CitasComponent implements OnInit {
         this.listaCitas = new Array<Cita>();
         this.citasService.obtenerCitas().then((result: any) => {
             if (result.status == true) {
-                //this.listaMedicos = result.vehiculo;
-                console.log(result.datos);
                 for (let row in result.datos) {
                     let cita: Cita = new Cita();
                     cita.id = result.datos[row][0];
                     cita.pacienteId = result.datos[row][1];
                     cita.medicoId = result.datos[row][2];
-                    cita.fechaCita = this.fechaMostrar(result.datos[row][3]);
+                    cita.fechaCita = this.utilidades.formatoFechaHoraStringCompleta(result.datos[row][3]);
                     cita.isAsistio = result.datos[row][4];
                     this.listaCitas.push(cita);
+                    
                 }
-                console.log(this.listaCitas);
             }
         }, (error) => {
-            alert(error);
+            this.utilidades.alertaInformacion("Información", error.message, "Ok");
         });
     }
 
@@ -55,31 +55,6 @@ export class CitasComponent implements OnInit {
 
     nuevaCita() {
         this.routerExtensions.navigate(["/citas/nuevo"]);
-    }
-
-    fechaMostrar(fechaStr: string) {
-
-        let fecha: Date = new Date(fechaStr);
-
-        let year = fecha.getFullYear();
-        let month = fecha.getMonth() + 1;
-        let monthStr = month < 10 ? "0" + month : month;
-        let day = fecha.getDay();
-        let dayStr = day < 10 ? "0" + day : day;
-
-        let hora = this.formatoHoraAMPM(fecha);
-        return year + "/" + month + "/" + dayStr + " - " + hora;
-
-    }
-
-    formatoHoraAMPM(date: Date) {
-        let hora = date.getHours();
-        let minutos = date.getMinutes();
-        let ampm = hora >= 12 ? 'pm' : 'am';
-        hora = hora % 12;
-        hora = hora ? hora : 12;
-        let strMinutos = minutos < 10 ? "0" + minutos : minutos;
-        return hora + ':' + strMinutos + ' ' + ampm;
     }
 
     irABusquedas() {

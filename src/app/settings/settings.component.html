@@ -9,13 +9,40 @@
     NavigationButton as a side-drawer button in iOS is not possible,
     because its function is to always navigate back in the application.
     -->
-    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()"
-        ios.position="left">
+    <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
     <Label text="Settings"></Label>
 </ActionBar>
+<ScrollView>
+    <GridLayout rows="22, 24 ,28, 16, 24,28, 16, 24,28, 16, 55,28,16, 55" columns="32,*,32,24,*,38,38" class="body scf-card">
 
-<GridLayout class="page__content">
-    <Label class="page__content-icon fas" text="&#xf013;"></Label>
-    <Label class="page__content-placeholder" text="<!-- Page content goes here -->"></Label>
-</GridLayout>
+        <FlexboxLayout row="1" col="0" colSpan="5" rowspan="2" class="flex-center-icon">
+            <Label text="Activar Sincronización" class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="1" col="5" rowSpan="2" colspan="2" class="flex-center-icon">
+            <Switch [checked]="isChecked" (checkedChange)="onCheckedChange($event)"></Switch>
+        </FlexboxLayout>
+
+        <FlexboxLayout row="4" col="1" colSpan="5">
+            <Label text="Recurrencia Sincronización" class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="5" col="1" colSpan="5">
+            <Label text="Diariamente" class="label-seleccion"></Label>
+        </FlexboxLayout>
+
+        <FlexboxLayout row="7" col="1" colSpan="5">
+            <Label text="Hora Sincronización" class="title-label"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="8" col="1" colSpan="5">
+            <Label [text]="horaSync" class="label-seleccion" editable="false" (tap)="seleccionarHora()"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout row="7" col="5" rowSpan="2" class="flex-center-icon">
+            <Label text="&#xf105;" class="fas fa-angle-right" (tap)="seleccionarHora()"></Label>
+        </FlexboxLayout>
+
+        <Button row="10" col="1" colSpan="5" text="Guardar" (tap)="guardarParametros()" class="btn-primary"></Button>
+
+        <Button row="13" col="1" colSpan="5" text="Sincronizar Manualmente" (tap)="obtenerServiciosXTipo()" class="btn-primary-2"></Button>
+
+    </GridLayout>
+</ScrollView>

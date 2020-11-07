@@ -11,12 +11,12 @@
     -->
     <ActionItem icon="res://menu" android:visibility="collapsed" (tap)="onDrawerButtonTap()" ios.position="left">
     </ActionItem>
-    <Label text="Home"></Label>
+    <Label text="Registrar Llegada"></Label>
 </ActionBar>
 
-<ScrollView>
+<ScrollView id="scrollId">
 
-    <GridLayout rows="22, 28, 28, 16, 28, 28, 16, 28, 28, 16, 28, 28, 16, 28, 28, 16, 40" columns="32,*,32,24,*,32,32" class="body scf-card">
+    <GridLayout rows="22, 28, 28, 16, 28, 28, 16, 28, 28, 16, 28, 28, 16, 150, 40, 16, 50" columns="32,*,32,24,*,32,32" class="body scf-card">
 
         <FlexboxLayout row="1" col="1" colSpan="5">
             <Label text="Identificación del Paciente" class="title-label"></Label>
@@ -46,22 +46,31 @@
             <Label text="Fecha Cita: " class="title-label"></Label>
         </FlexboxLayout>
         <FlexboxLayout row="11" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
-            <Label text='{{fechaCita}}' class="label-seleccion"></Label>
+            <Label text='{{cita.fechaCita}}' class="label-seleccion"></Label>
         </FlexboxLayout>
 
-        <FlexboxLayout row="13" col="1" colSpan="5" >
-            <Label text="Firma del Paciente" class="title-label"></Label>
+        <FlexboxLayout row="13" col="1" colSpan="5" *ngIf="banderaMostrarDatos" class="m-t-20">
+            <StackLayout class="recuadro-firma" background="yellow">
+                <DrawingPad id="myDrawingPad" height="100%" width="100%" background="whitesmoke"></DrawingPad>
+            </StackLayout>
         </FlexboxLayout>
-        <FlexboxLayout row="14" col="1" colSpan="5" >
-            <Label text="firmaAquí" class="label-seleccion" (tap)="firmaPaciente()"></Label>
+        <FlexboxLayout row="14" col="1" colSpan="5" class="flex-center" *ngIf="banderaMostrarDatos">
+            <Label class="m-t-5 m-b-10 lbl-firma" text="Firme dentro del recuadro"></Label>
         </FlexboxLayout>
-        <FlexboxLayout row="13" col="5" rowSpan="2"  class="flex-center-icon">
-            <Label text="&#xf105;" class="fas fa-angle-right" (tap)="firmaPaciente()"></Label>
-        </FlexboxLayout>
-
-        <FlexboxLayout row="16" col="1" colSpan="5" *ngIf="banderaMostrarDatos" class="flex-center-icon">
-            <Button text="Guardar" class="btn-primary" (tap)="actualizarCita()"></Button>
+        <FlexboxLayout class="flex-center" row="16" col="1" colSpan="5" *ngIf="banderaMostrarDatos">
+            <Button text="Guardar" class="btn-primary" (tap)="getMyDrawing()" width="60%"></Button>
         </FlexboxLayout>
 
     </GridLayout>
+    <!--<FlexboxLayout class="flex-center">
+        <StackLayout class="recuadro-firma" background="red">
+            <DrawingPad id="myDrawingPad" height="50%" width="90%" background="whitesmoke"></DrawingPad>
+        </StackLayout>
+        <FlexboxLayout class="flex-center">
+            <Label class="m-t-5 m-b-10 lbl-firma" text="Firme dentro del recuadro"></Label>
+        </FlexboxLayout>
+        <FlexboxLayout class="flex-center">
+            <Button text="Guardar" class="btn-primary" (tap)="getMyDrawing()" width="50%"></Button>
+        </FlexboxLayout>
+    </FlexboxLayout>-->
 </ScrollView>

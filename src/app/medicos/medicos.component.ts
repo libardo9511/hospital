@@ -8,6 +8,7 @@ import { RouterExtensions } from "nativescript-angular/router";
 import { Medico } from "../modelos/medico";
 import { confirm } from "tns-core-modules/ui/dialogs";
 import { Cita } from "../modelos/cita";
+import { Utilidades } from "../modelos/utils";
 
 @Component({
     selector: "Medicos",
@@ -19,6 +20,7 @@ export class MedicosComponent implements OnInit {
     btnFab: View = null;
     listaMedicos: Array<Medico>;
     isEliminar: boolean = false;
+    utilidades: Utilidades = new Utilidades();
 
     constructor(private page: Page, private medicosService: MedicosService, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
@@ -33,8 +35,6 @@ export class MedicosComponent implements OnInit {
         this.listaMedicos = new Array<Medico>();
         this.medicosService.obtenerMedicos().then((result: any) => {
             if (result.status == true) {
-                //this.listaMedicos = result.vehiculo;
-                //console.log(result.datos);
                 for (let row in result.datos) {
                     let medico: Medico = new Medico();
                     medico.tarjetaProf = result.datos[row][0];
@@ -44,12 +44,10 @@ export class MedicosComponent implements OnInit {
                     medico.isDomicilio = result.datos[row][4];
                     this.listaMedicos.push(medico);
                 }
-                //console.log(this.listaMedicos);
             }
         }, (error) => {
-            alert(error);
+            this.utilidades.alertaInformacion("Información", error.message, "Ok");
         });
-        // Init your component
     }
 
     onDrawerButtonTap(): void {
@@ -57,39 +55,19 @@ export class MedicosComponent implements OnInit {
         sideDrawer.showDrawer();
     }
 
-    /*listarMedicos() {
-        return new Promise<Object>((resolve, reject) => {
-            this.sqliteService.getdbConnection()
-                .then(db => {
-                    db.all("SELECT * FROM medicos").then(rows => {
-                        if (rows.length > 0) {
-                            console.log(rows);
-                            resolve({ status: true });
-                        }
-                        else {
-                            reject({ status: false });
-                        }
-                    });
-                });
-        });
-    }*/
-
     verificarSiTieneCitasActivas(codTarjeta: string) {
         this.medicosService.verificarHistorialCitas(codTarjeta).then((result: any) => {
             if (result.status == true) {
-                //this.listaMedicos = result.vehiculo;
                 let fechaActual = new Date();
-                //console.log("Citas de medico: " + result.datos);
                 for (let row in result.datos) {
                     if (this.compararFechasCitas(fechaActual, new Date(result.datos[row][3]))) {
                         this.isEliminar = true;
-                        alert("Imposible eliminar, existen citas pendientes");
+                        this.utilidades.alertaInformacion("Error!", "Imposible eliminar, el médico seleccionado tiene citas pendientes.", "Ok");                        
                         break;
                     }
                 }
             }
         }, (error) => {
-            //alert(error);
             this.eliminarMedico(codTarjeta);
         });
     }
@@ -111,7 +89,7 @@ export class MedicosComponent implements OnInit {
         // >> confirm-dialog-code
         console.log("Eliminar Medico");
         let options = {
-            title: "Cuadro de confirmación",
+            title: "Confirmar Eliminación",
             message: "Se eliminará también los registros en el historial. ¿Continuar con la eliminación?",
             okButtonText: "Si",
             cancelButtonText: "No"
@@ -122,16 +100,14 @@ export class MedicosComponent implements OnInit {
             if (result) {
                 this.medicosService.eliminarMedico(codigoTarjeta).then((result: any) => {
                     if (result.status == true) {
-                        alert(result.message);
+                        this.utilidades.alertaInformacion("Información", result.message, "Ok");
                         this.refresh();
-                        //this.routerExtensions.navigate(["/pacientes"], { clearHistory: true });
                     }
                 }, (error) => {
                     alert(error);
                 });
-                //this.verificarSiTieneCitasActivas(codigoTarjeta);
             } else {
-                alert("Eliminación Cancelada")
+                this.utilidades.alertaInformacion("Información", "Eliminación Cancelada", "Ok");
             }
         });
         // << confirm-dialog-code
@@ -141,8 +117,6 @@ export class MedicosComponent implements OnInit {
         this.listaMedicos = new Array<Medico>();
         this.medicosService.obtenerMedicos().then((result: any) => {
             if (result.status == true) {
-                //this.listaMedicos = result.vehiculo;
-                //console.log(result.datos);
                 for (let row in result.datos) {
                     let medico: Medico = new Medico();
                     medico.tarjetaProf = result.datos[row][0];
@@ -152,10 +126,9 @@ export class MedicosComponent implements OnInit {
                     medico.isDomicilio = result.datos[row][4];
                     this.listaMedicos.push(medico);
                 }
-                //console.log(this.listaMedicos);
             }
         }, (error) => {
-            alert(error);
+            this.utilidades.alertaInformacion("Información", error.message, "Ok");
         });
     }
 

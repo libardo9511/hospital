@@ -8,13 +8,16 @@
     </FlexboxLayout>
     <ScrollView>
         <StackLayout class="" height="80%">
+            <FlexboxLayout class="flex-no-datos m-t-20" *ngIf="pacientes.length == 0">
+                <Label text="No hay resultados" class="label-list" ></Label>
+            </FlexboxLayout>
             <ListView [items]="pacientes" class="list-group" (itemTap)="onSelectItem($event)" height="90%">
                 <ng-template let-item="item">
                     <GridLayout rows="30,30" columns="*,*">
                         <Label row="0" column="0" [text]="item.nombres" class="label-list"></Label>
                         <Label row="0" column="1" [text]="item.apellidos" class="label-list"></Label>
                         <Label row="1" column="0" [text]="item.identificacion" class="label-list"></Label>
-                        <Label row="1" column="1" [text]="item.fechaNaci" class="label-list"></Label>                        
+                        <Label row="1" column="1" [text]="item.fechaNaci" class="label-list"></Label>
                     </GridLayout>
                 </ng-template>
             </ListView>

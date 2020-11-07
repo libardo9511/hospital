@@ -9,7 +9,7 @@ import { SeleccionarFechaComponent } from "../seleccionar-fecha/seleccionar-fech
 import { SeleccionarHoraComponent } from "../seleccionar-hora/seleccionar-hora.component";
 import { Paciente } from '../../modelos/paciente';
 import { Medico } from '../../modelos/medico';
-
+import { Utilidades } from "../../modelos/utils";
 
 @Component({
   selector: 'ns-nueva-cita',
@@ -27,7 +27,7 @@ export class NuevaCitaComponent implements OnInit {
 
   paciente: Paciente;
   medico: Medico;
-
+  utilidades: Utilidades = new Utilidades();
 
   constructor(private citasService: CitasService, private routerExtensions: RouterExtensions,
     private _modalService: ModalDialogService, private _vcRef: ViewContainerRef) { }
@@ -35,25 +35,15 @@ export class NuevaCitaComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  formatoHoraAMPM(date: Date) {
-    let hora = date.getHours();
-    let minutos = date.getMinutes();
-    let ampm = hora >= 12 ? 'pm' : 'am';
-    hora = hora % 12;
-    hora = hora ? hora : 12;
-    let strMinutos = minutos < 10 ? "0" + minutos : minutos;
-    this.horaCita = hora + ':' + strMinutos + ' ' + ampm;
-  }
-
   crearCita() {
     this.cita.isAsistio = 0;
     this.citasService.guardarCita(this.cita).then((result: any) => {
       if (result.status == true) {
-        alert(result.message);
+        this.utilidades.alertaInformacion("Información", result.message, "Ok");
         this.routerExtensions.navigate(["/citas"], { clearHistory: true });
       }
     }, (error) => {
-      alert(error);
+      this.utilidades.alertaInformacion("Información", error, "Ok");
     });
   }
 
@@ -69,7 +59,6 @@ export class NuevaCitaComponent implements OnInit {
 
     this._modalService.showModal(BuscarPacienteComponent, options)
       .then((result: any) => {
-        console.log("Atras paciente");
         if (result) {
           this.paciente = new Paciente();
           this.paciente = result.paciente;
@@ -103,9 +92,7 @@ export class NuevaCitaComponent implements OnInit {
     this._modalService.showModal(SeleccionarFechaComponent, options)
       .then((result: any) => {
         if (typeof result !== 'undefined') {
-          ;
           this.fechaCita = result.fechaCita;
-          console.log(this.fechaCita);
         }
       });
   }
@@ -119,12 +106,14 @@ export class NuevaCitaComponent implements OnInit {
     this._modalService.showModal(SeleccionarHoraComponent, options)
       .then((result: any) => {
         if (typeof result !== 'undefined') {
-          let formatoDate: Date = new Date(result.horaCita);
-          this.horaBaseD = formatoDate;
-          console.log(this.horaBaseD);
-          //console.log("hora date: " + formatoDate.getHours() + ":" + formatoDate.getMinutes());
-          this.formatoHoraAMPM(formatoDate);
-          //this.horaCita = result.horaCita;
+          if (result.horaCita != "Seleccione una hora") {
+            console.log("Selec hora: " + result);
+            let formatoDate: Date = new Date(result.horaCita);
+            this.horaBaseD = formatoDate;
+            this.horaCita = this.utilidades.formatoHoraAMPM(formatoDate);
+          } else {
+            this.horaCita = result.horaCita
+          }
         }
       });
   }
@@ -139,12 +128,13 @@ export class NuevaCitaComponent implements OnInit {
     cita.isAsistio = 0;
 
     this.citasService.guardarCita(cita).then((result: any) => {
+      console.log(result);
       if (result.status == true) {
-        alert(result.message);
+        this.utilidades.alertaInformacion("Información", result.message, "Ok");
         this.routerExtensions.navigate(["/citas"], { clearHistory: true });
       }
     }, (error) => {
-      alert(error);
+      this.utilidades.alertaInformacion("Información", error, "Ok");
     });
   }
 

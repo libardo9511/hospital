@@ -27,8 +27,6 @@ export class BuscarPacienteComponent implements OnInit {
     this.arrayPacientes = new Array<Paciente>();
     this.pacientesService.obtenerPacientes().then((result: any) => {
       if (result.status == true) {
-        //this.listaMedicos = result.vehiculo;
-        console.log(result.datos);
         for (let row in result.datos) {
           let paciente: Paciente = new Paciente();
           paciente.identificacion = result.datos[row][0];
@@ -51,7 +49,6 @@ export class BuscarPacienteComponent implements OnInit {
 
   onSelectItem(args) {
     let paciente = (this._searchedText !== "") ? this.pacientes.getItem(args.index) : this.arrayPacientes[args.index];
-    console.log(args.index);
     this._params.closeCallback({
       paciente
     });
@@ -86,7 +83,7 @@ export class BuscarPacienteComponent implements OnInit {
   public onClear(args) {
     let searchBar = <SearchBar>args.object;
     searchBar.text = "";
-    searchBar.hint = "Identificación del paciente";
+    searchBar.hint = "Buscar por identificación";
 
     this.pacientes = new ObservableArray<Paciente>();
     this.arrayPacientes.forEach(item => {

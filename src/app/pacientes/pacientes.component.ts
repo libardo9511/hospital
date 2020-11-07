@@ -7,6 +7,7 @@ import { Paciente } from "../modelos/paciente";
 import { PacientesService } from "../services/pacientes.service";
 import { RouterExtensions } from "nativescript-angular/router";
 import { confirm } from "tns-core-modules/ui/dialogs";
+import { Utilidades } from "../modelos/utils";
 
 @Component({
     selector: "Pacientes",
@@ -17,6 +18,7 @@ export class PacientesComponent implements OnInit {
 
     btnFab: View = null;
     listaPacientes: Array<Paciente>;
+    utilidades: Utilidades = new Utilidades();
 
     constructor(private page: Page, private pacientesService: PacientesService, private routerExtensions: RouterExtensions) {
         // Use the component constructor to inject providers.
@@ -31,8 +33,6 @@ export class PacientesComponent implements OnInit {
         this.listaPacientes = new Array<Paciente>();
         this.pacientesService.obtenerPacientes().then((result: any) => {
             if (result.status == true) {
-                //this.listaMedicos = result.vehiculo;
-               // console.log(result.datos);
                 for (let row in result.datos) {
                     let paciente: Paciente = new Paciente();
                     paciente.identificacion = result.datos[row][0];
@@ -43,10 +43,9 @@ export class PacientesComponent implements OnInit {
                     paciente.valorCuota = result.datos[row][5];
                     this.listaPacientes.push(paciente);
                 }
-                //console.log(this.listaPacientes);
             }
         }, (error) => {
-            alert(error);
+            this.utilidades.alertaInformacion("Información", error.message, "Ok");
         });
     }
 
@@ -62,7 +61,7 @@ export class PacientesComponent implements OnInit {
     eliminarPaciente(identificacion: string) {
         // >> confirm-dialog-code
         let options = {
-            title: "Cuadro de confirmación",
+            title: "Confirmar Eliminación",
             message: "Se eliminará también el historial. ¿Continuar con la eliminación?",
             okButtonText: "Si",
             cancelButtonText: "No"
@@ -73,27 +72,23 @@ export class PacientesComponent implements OnInit {
             if (result) {
                 this.pacientesService.eliminarPaciente(identificacion).then((result: any) => {
                     if (result.status == true) {
-                        alert(result.message);
+                        this.utilidades.alertaInformacion("Información", result.message, "Ok");
                         this.refresh();
-                        //this.routerExtensions.navigate(["/pacientes"], { clearHistory: true });
                     }
                 }, (error) => {
                     alert(error);
                 });
             } else {
-                alert("Eliminación Cancelada")
+                this.utilidades.alertaInformacion("Información", "Eliminación Cancelada", "Ok");
             }
         });
         // << confirm-dialog-code
     }
-    //this.routerExtensions.navigate(["/pacientes/nuevo"])
 
     refresh() {
         this.listaPacientes = new Array<Paciente>();
         this.pacientesService.obtenerPacientes().then((result: any) => {
             if (result.status == true) {
-                //this.listaMedicos = result.vehiculo;
-                //console.log(result.datos);
                 for (let row in result.datos) {
                     let paciente: Paciente = new Paciente();
                     paciente.identificacion = result.datos[row][0];
@@ -104,10 +99,9 @@ export class PacientesComponent implements OnInit {
                     paciente.valorCuota = result.datos[row][5];
                     this.listaPacientes.push(paciente);
                 }
-                //console.log(this.listaPacientes);
             }
         }, (error) => {
-            alert(error);
+            this.utilidades.alertaInformacion("Información", error.message, "Ok")
         });
     }
 }

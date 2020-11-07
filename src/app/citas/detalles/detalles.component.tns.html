@@ -65,5 +65,12 @@
                 </FlexboxLayout>
             </GridLayout>
         </FlexboxLayout>
+
+        <FlexboxLayout col="1" colSpan="2" *ngIf="cita.isAsistio == 1" class="m-t-20 flex-center-icon">
+            <StackLayout class="recuadro-firma" background="yellow" height="150" width="90%">
+                <Image [src]="signatureImage" height="100%" width="100%"></Image>
+            </StackLayout>
+        </FlexboxLayout>
+
     </FlexboxLayout>
 </ScrollView>

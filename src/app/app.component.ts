@@ -5,7 +5,7 @@ import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nat
 import { filter } from "rxjs/operators";
 import * as app from "tns-core-modules/application";
 import { SqliteService } from "./services/sqlite.service";
-import {registerElement} from "nativescript-angular/element-registry";
+import { registerElement } from "nativescript-angular/element-registry";
 
 @Component({
     selector: "ns-app",
@@ -28,11 +28,14 @@ export class AppComponent implements OnInit {
                 }, error => {
                     console.log("CREATE TABLE MEDICOS ERROR", error);
                 });
-                db.execSQL(`CREATE TABLE IF NOT EXISTS "citas" ("idCita" INTEGER NOT NULL, "pacienteId" INTEGER NOT NULL, "medicoId" INTEGER NOT NULL, "fechaCita" TEXT NOT NULL, "isAsistio" INTEGER NOT NULL CHECK ("isAsistio" = 0 OR "isAsistio" = 1), PRIMARY KEY("idCita" AUTOINCREMENT), FOREIGN KEY ("pacienteId") REFERENCES pacientes ("pacienteId") ON DELETE CASCADE, FOREIGN KEY ("medicoId") REFERENCES medicos ("tarjetaProf") ON DELETE CASCADE)`).then(() => {
+                db.execSQL(`CREATE TABLE IF NOT EXISTS "citas" ("idCita" INTEGER NOT NULL, "pacienteId" INTEGER NOT NULL, "medicoId" INTEGER NOT NULL, "fechaCita" TEXT NOT NULL, "isAsistio" INTEGER NOT NULL CHECK ("isAsistio" = 0 OR "isAsistio" = 1), "firma" TEXT, PRIMARY KEY("idCita" AUTOINCREMENT), FOREIGN KEY ("pacienteId") REFERENCES pacientes ("pacienteId") ON DELETE CASCADE, FOREIGN KEY ("medicoId") REFERENCES medicos ("tarjetaProf") ON DELETE CASCADE)`).then(() => {
                 }, error => {
                     console.log("CREATE TABLE CITAS ERROR", error);
                 });
-
+                db.execSQL(`CREATE TABLE IF NOT EXISTS "logs" ("idSentencia" INTEGER NOT NULL, "sentencia" TEXT NOT NULL, PRIMARY KEY("idSentencia" AUTOINCREMENT))`).then(() => {
+                }, error => {
+                    console.log("CREATE TABLE LOGS ERROR", error);
+                });
             });
     }
 

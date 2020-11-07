@@ -18,7 +18,7 @@ export class PacientesService {
               resolve({ status: true, datos: rows });
             }
             else {
-              reject({ status: false, message: "Aún no hay datos" });
+              reject({ status: false, message: "Aún no hay pacientes registrados" });
             }
           });
         });
@@ -30,6 +30,9 @@ export class PacientesService {
       this.sqliteService.getdbConnection()
         .then(db => {
           db.execSQL("INSERT INTO pacientes (pacienteId, nombres, apellidos, fechaNaci, isTratamiento, valorCuota) VALUES (?,?,?,?,?,?)", [paciente.identificacion, paciente.nombres, paciente.apellidos, paciente.fechaNaci, paciente.isTratamiento, paciente.valorCuota]).then(id => {
+            db.execSQL("insert into logs (sentencia) values (?)", [`INSERT INTO pacientes (pacienteId, nombres, apellidos, fechaNaci, isTratamiento, valorCuota) VALUES ('${paciente.identificacion}','${paciente.nombres}','${paciente.apellidos}','${paciente.fechaNaci}',${paciente.isTratamiento}, ${paciente.valorCuota})`], function (err, id) {
+              console.log("The new record id is:", id);
+            });
             resolve({ status: true, message: "Guardado Correctamente" });
           }, err => {
             reject({ status: false, message: "Error al Guardar" });
@@ -77,6 +80,9 @@ export class PacientesService {
       this.sqliteService.getdbConnection()
         .then(db => {
           db.execSQL("UPDATE pacientes SET nombres = ?, apellidos = ?, fechaNaci = ?, isTratamiento = ?, valorCuota = ? WHERE pacienteId = ?", [paciente.nombres, paciente.apellidos, paciente.fechaNaci, paciente.isTratamiento, paciente.valorCuota, paciente.identificacion]).then(id => {
+            db.execSQL("insert into logs (sentencia) values (?)", [`UPDATE pacientes SET nombres = '${paciente.nombres}', apellidos = '${paciente.apellidos}', fechaNaci = '${paciente.fechaNaci}', isTratamiento = ${paciente.isTratamiento}, valorCuota = ${paciente.valorCuota} WHERE pacienteId = '${paciente.identificacion}'`], function (err, id) {
+              console.log("The new record id is:", id);
+            });
             resolve({ status: true, message: "Actualizado Correctamente" });
           }, err => {
             reject({ status: false, message: "Error al Guardar" });
@@ -91,6 +97,9 @@ export class PacientesService {
       this.sqliteService.getdbConnection()
         .then(db => {
           db.execSQL("DELETE FROM pacientes WHERE pacienteId = ?", [identificacion]).then(id => {
+            db.execSQL("insert into logs (sentencia) values (?)", [`DELETE FROM pacientes WHERE pacienteId = '${identificacion}'`], function (err, id) {
+              console.log("The new record id is:", id);
+            });
             resolve({ status: true, message: "Eliminado Correctamente" });
           }, err => {
             reject({ status: false, message: "Error al Eliminar" });

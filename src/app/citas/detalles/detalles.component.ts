@@ -3,6 +3,8 @@ import { Cita } from "../../modelos/cita";
 import { RouterExtensions } from "nativescript-angular/router";
 import { ActivatedRoute } from "@angular/router";
 import { CitasService } from "../../services/citas.service";
+import * as imageSourceModule from "tns-core-modules/image-source";
+import { Utilidades } from "../../modelos/utils";
 
 @Component({
   selector: 'ns-detalles',
@@ -14,6 +16,8 @@ export class DetallesComponent implements OnInit {
   cita: Cita;
   fechaCita: Date;
   horaCita: string = "";
+  signatureImage: imageSourceModule.ImageSource
+  utilidades: Utilidades = new Utilidades();
 
   constructor(private routerExtensions: RouterExtensions, private route: ActivatedRoute, private citasService: CitasService) { }
 
@@ -22,32 +26,23 @@ export class DetallesComponent implements OnInit {
     this.cita = new Cita();
     this.citasService.obtenerCitaById(item).then((result: any) => {
       if (result.status == true) {
-        //this.listaMedicos = result.vehiculo;
-        console.log(result.datos);
         this.cita.id = result.datos[0];
         this.cita.pacienteId = result.datos[1];
         this.cita.medicoId = result.datos[2];
         this.cita.fechaCita = result.datos[3];
         this.cita.isAsistio = result.datos[4];
+        this.cita.firma = result.datos[5];
         this.fechaCita = new Date(this.cita.fechaCita);
-        this.formatoHoraAMPM(this.fechaCita);
+        this.horaCita = this.utilidades.formatoHoraAMPM(this.fechaCita);
+        if (this.cita.firma != null) {
+          console.log(this.cita.firma.length);
+          this.signatureImage = imageSourceModule.fromBase64(this.cita.firma);
+        }
       }
     }, (error) => {
-      alert(error);
+      this.utilidades.alertaInformacion("Información", error.messaje, "Ok");
     });
-    console.log(item);
   }
-
-  formatoHoraAMPM(date: Date) {
-    let hora = date.getHours();
-    let minutos = date.getMinutes();
-    let ampm = hora >= 12 ? 'pm' : 'am';
-    hora = hora % 12;
-    hora = hora ? hora : 12;
-    let strMinutos = minutos < 10 ? "0" + minutos : minutos;
-    this.horaCita = hora + ':' + strMinutos + ' ' + ampm;
-  }
-
 
   cancelar() {
     this.routerExtensions.navigate(["/citas"], { clearHistory: true });

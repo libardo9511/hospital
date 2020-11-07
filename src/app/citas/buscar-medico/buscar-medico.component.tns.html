@@ -8,6 +8,9 @@
     </FlexboxLayout>
     <ScrollView>
         <StackLayout class="" height="80%">
+            <FlexboxLayout class="flex-no-datos m-t-20" *ngIf="medicos.length == 0">
+                <Label text="No hay resultados" class="label-list"></Label>
+            </FlexboxLayout>
             <ListView [items]="medicos" class="list-group" (itemTap)="onSelectItem($event)" height="90%">
                 <ng-template let-item="item">
                     <GridLayout rows="30,30" columns="*,*">
